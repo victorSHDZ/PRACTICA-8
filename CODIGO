@@ -1,0 +1,53 @@
+#VICTOR ALEJANDRO SALAZAR HERNANDEZ
+#PRACTICA 8
+
+import numpy as np
+from matplotlib import pyplot as plt
+import cv2 #Opencv
+import math
+import skimage
+from skimage import io
+
+img = cv2.imread('ima2.PNG')
+rimg = cv2.resize(img, (300,300))
+cv2.imshow('Imagen Original',rimg)
+
+imgCanny = cv2.Canny(img, 1500, 1500) #Entre mas bajo mas lineas
+
+
+#Canny
+
+img_g = cv2.cvtColor(rimg,cv2.COLOR_BGR2GRAY)
+img_b = cv2.Canny(img_g, 200, 200)
+cv2.imshow('Canny',img_b)
+
+#Laplace
+
+laplace = cv2.Laplacian(img_g, cv2.CV_64F)
+laplace = np.uint8(np.absolute(laplace))
+cv2.imshow("Laplaciano",laplace)
+
+#Sobel
+
+sobelX = cv2.Sobel(img_g,cv2.CV_64F,1,0)
+sobelY = cv2.Sobel(img_g,cv2.CV_64F,0,1)
+sobelX = np.uint8(np.absolute(sobelX))
+sobelY = np.uint8(np.absolute(sobelY))
+
+#SobelX
+
+cv2.imshow("SobelX",sobelX)
+
+#SobelY
+
+cv2.imshow("SobelY",sobelY)
+
+#Sobel Combined
+
+sobelCombined = cv2.bitwise_or(sobelX, sobelY)
+cv2.imshow("Sobel",sobelCombined)
+
+
+
+cv2.waitKey(0)
+cv2.destroyAllWindows()
